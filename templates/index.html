@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and Download</title>
+    <style>
+        /* Common styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            background-image: url('static/block.jpg'); /* Specify your background image path */
+            background-size: cover; /* Cover the entire viewport */
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #fff; /* Set text color to white */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.7); /* Dark background color with opacity */
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff4500; /* Change headings color */
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.2); /* Transparent input background */
+            color: #fff; /* Set input text color to white */
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            display: flex; /* Align button and filename horizontally */
+            justify-content: space-between; /* Space between button and filename */
+        }
+        a {
+            color: #07c; /* Change link color */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #4af; /* Change link hover color */
+        }
+        /* Light mode */
+        body.light-mode {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        body.light-mode a {
+            color: #007bff;
+        }
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #222;
+            color: #fff;
+        }
+        body.dark-mode a {
+            color: #b3b3b3;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="container">
+        <h1>File Upload and Download</h1>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <form action="/upload" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <input type="file" name="file" id="file">
+            <br><br>
+            <button type="submit" id="uploadButton">Upload</button>
+        </form>
+        <h2>Download Uploaded Files</h2>
+        <ul id="uploadedFiles">
+            {% for filename in encrypted_files %}
+                <li>
+                    <a href="/download/{{ filename }}">{{ filename }}</a>
+                    
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        function toggleDarkMode() {
+            var body = document.body;
+            body.classList.toggle('dark-mode');
+        }
+
+        function validateForm() {
+            var fileInput = document.getElementById('file');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file.');
+                return false;
+            }
+            // Show upload success alert
+            alert('File uploaded successfully!');
+            return true; // Prevent form submission
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>
